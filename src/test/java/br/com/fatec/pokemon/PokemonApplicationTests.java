@@ -1,13 +1,32 @@
 package br.com.fatec.pokemon;
 
+import br.com.fatec.pokemon.integration.client.PokemonIntegrationWithFeign;
+import br.com.fatec.pokemon.integration.dto.PokemonApiResponse;
+import br.com.fatec.pokemon.integration.dto.PokemonTypeApiResponse;
+import br.com.fatec.pokemon.integration.dto.PokemonTypesApiResponse;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
 class PokemonApplicationTests {
 
-	@Test
-	void contextLoads() {
-	}
+    @Autowired
+    private PokemonIntegrationWithFeign integration;
+
+    @Test
+    void integrationApiPokemonSuccessTest() {
+        PokemonApiResponse apiResponse = integration.getPokemon("pikachu");
+        PokemonApiResponse testResponse = new PokemonApiResponse(
+                25,
+                "pikachu",
+                60,
+                List.of(new PokemonTypesApiResponse(new PokemonTypeApiResponse("electric"))));
+        assertEquals(testResponse, apiResponse);
+    }
 
 }
