@@ -1,5 +1,6 @@
 package br.com.fatec.pokemon;
 
+import br.com.fatec.pokemon.exception.NotFoundException;
 import br.com.fatec.pokemon.integration.client.PokemonIntegrationWithFeign;
 import br.com.fatec.pokemon.integration.dto.PokemonApiResponse;
 import br.com.fatec.pokemon.integration.dto.PokemonTypeApiResponse;
@@ -11,6 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest
 class PokemonApplicationTests {
@@ -27,6 +29,11 @@ class PokemonApplicationTests {
                 60,
                 List.of(new PokemonTypesApiResponse(new PokemonTypeApiResponse("electric"))));
         assertEquals(testResponse, apiResponse);
+    }
+
+    @Test
+    void integrationApiPokemonNotExistsTest() {
+        assertThrows(NotFoundException.class, () -> integration.getPokemon("dragogo"));
     }
 
 }

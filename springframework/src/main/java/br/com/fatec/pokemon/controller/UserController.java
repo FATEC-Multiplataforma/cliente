@@ -1,7 +1,7 @@
 package br.com.fatec.pokemon.controller;
 
-import br.com.fatec.pokemon.controller.dto.UserRequest;
-import br.com.fatec.pokemon.controller.dto.UserResponse;
+import br.com.fatec.pokemon.controller.dto.request.UserRequest;
+import br.com.fatec.pokemon.controller.dto.response.UserResponse;
 import br.com.fatec.pokemon.entity.Pokemon;
 import br.com.fatec.pokemon.integration.PokemonIntegration;
 import org.springframework.web.bind.annotation.GetMapping;

@@ -32,11 +32,11 @@ public class PokemonIntegration {
         return PokemonIntegrationAdapter.cast(pokemonResponse);
     }
 
-    @Recover
-    @Cacheable(value = "pokemon-cache", key = "#pokemon")
-    public Pokemon recover(final FeignException ex, final String pokemon) {
-        System.out.println("Fallback: " + pokemon);
-        return new Pokemon("NO NAME", 0, List.of(new PokemonType("NO TYPE")));
-    }
+//    @Recover
+//    @Cacheable(value = "pokemon-cache", key = "#pokemon")
+//    public Pokemon recover(final FeignException ex, final String pokemon) {
+//        System.out.println("Fallback: " + pokemon);
+//        return new Pokemon("NO NAME", 0, List.of(new PokemonType("NO TYPE")));
+//    }
 
 }
