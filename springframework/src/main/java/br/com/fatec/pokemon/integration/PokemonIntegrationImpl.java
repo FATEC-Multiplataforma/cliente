@@ -15,13 +15,15 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
-public class PokemonIntegration {
+public class PokemonIntegrationImpl implements PokemonIntegration {
     public final PokemonIntegrationWithFeign integration;
 
-    public PokemonIntegration(PokemonIntegrationWithFeign integration) {
+    public PokemonIntegrationImpl(PokemonIntegrationWithFeign integration) {
         this.integration = integration;
     }
 
+
+    @Override
     @Retryable(
             maxAttempts = 4,
             backoff = @Backoff(delay = 1000))
@@ -32,11 +34,11 @@ public class PokemonIntegration {
         return PokemonIntegrationAdapter.cast(pokemonResponse);
     }
 
-//    @Recover
-//    @Cacheable(value = "pokemon-cache", key = "#pokemon")
-//    public Pokemon recover(final FeignException ex, final String pokemon) {
-//        System.out.println("Fallback: " + pokemon);
-//        return new Pokemon("NO NAME", 0, List.of(new PokemonType("NO TYPE")));
-//    }
+    @Recover
+    @Cacheable(value = "pokemon-cache", key = "#pokemon")
+    public Pokemon recover(final FeignException ex, final String pokemon) {
+        System.out.println("Fallback: " + pokemon);
+        return new Pokemon("NO NAME", 0, List.of(new PokemonType("NO TYPE")));
+    }
 
 }
