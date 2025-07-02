@@ -1,7 +1,7 @@
 package br.com.fatec.pokemon.controller.adapter;
 
-import br.com.fatec.pokemon.controller.dto.UserResponseV1;
-import br.com.fatec.pokemon.controller.dto.UserResponseV2;
+import br.com.fatec.pokemon.controller.dto.response.UserResponseV1;
+import br.com.fatec.pokemon.controller.dto.response.UserResponseV2;
 import br.com.fatec.pokemon.entity.User;
 
 public class PokemonResponseAdapter {

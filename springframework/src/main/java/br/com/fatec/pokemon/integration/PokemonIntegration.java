@@ -30,10 +30,10 @@ public class PokemonIntegration {
         return PokemonIntegrationAdapter.cast(integration.getPokemon(pokemonName));
     }
 
-    @Recover
-    @Cacheable(value = "pokemon-cache", key = "#pokemonName")
-    public User recover(FeignException ex, String pokemonName) {
-        System.out.println("Fallback: " + pokemonName);
-        return new User(0, "NO NOME", 0, List.of());
-    }
+//    @Recover
+//    @Cacheable(value = "pokemon-cache", key = "#pokemonName")
+//    public User recover(FeignException ex, String pokemonName) {
+//        System.out.println("Fallback: " + pokemonName);
+//        return new User(0, "NO NOME", 0, List.of());
+//    }
 }
