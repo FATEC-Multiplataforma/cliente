@@ -1,4 +1,4 @@
-package br.com.fatec.pokemon.integration;
+package br.com.fatec.pokemon.integration.client;
 
 import br.com.fatec.pokemon.exception.BadRequestException;
 import br.com.fatec.pokemon.exception.InternalServerException;

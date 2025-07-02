@@ -19,18 +19,23 @@ public class UserController {
         this.service = service;
     }
 
-    @PostMapping
+    @PostMapping("/user")
     public UserResponse save(@RequestBody UserRequest request) {
         User user = UserControllerAdapter.cast(request);
         return UserControllerAdapter.cast(service.registerUserWithPokemon(user));
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/user/find-name/{name}")
+    public UserResponse findByName(@PathVariable(value = "name") String name) {
+        return UserControllerAdapter.cast(repository.findByName(name));
+    }
+
+    @GetMapping("/user/find-id/{id}")
     public UserResponse findById(@PathVariable(value = "id") String id) {
         return UserControllerAdapter.cast(repository.findById(id));
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/user/{id}")
     public void delete(@PathVariable(value = "id") String id) {
         repository.delete(id);
     }
