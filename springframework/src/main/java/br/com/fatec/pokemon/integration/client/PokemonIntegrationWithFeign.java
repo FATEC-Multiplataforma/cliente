@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 @FeignClient(
-        name = "PokemonIntegration",
+        name = "PokemonIntegrationImpl",
         url = "${pokemon.url}")
 public interface PokemonIntegrationWithFeign {
     @GetMapping("/api/v2/pokemon/{pokemonName}")

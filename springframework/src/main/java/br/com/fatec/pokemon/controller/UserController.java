@@ -2,39 +2,47 @@ package br.com.fatec.pokemon.controller;
 
 import br.com.fatec.pokemon.controller.adapter.PokemonResponseAdapter;
 import br.com.fatec.pokemon.controller.dto.request.UserRequest;
-import br.com.fatec.pokemon.controller.dto.response.UserResponseV1;
-import br.com.fatec.pokemon.controller.dto.response.UserResponseV2;
-import br.com.fatec.pokemon.integration.PokemonIntegration;
+import br.com.fatec.pokemon.controller.dto.response.UserResponse;
+import br.com.fatec.pokemon.entity.User;
+import br.com.fatec.pokemon.repository.UserRepository;
+import br.com.fatec.pokemon.service.UserPokemonService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/pokemon")
+@RequestMapping("/pokemon/v1")
 public class UserController {
+    private final UserRepository repository;
+    private final UserPokemonService service;
 
-    private final PokemonIntegration integration;
-
-    public UserController(PokemonIntegration integration) {
-        this.integration = integration;
-    }
-
-    @ResponseStatus(HttpStatus.OK)
-    @GetMapping("/v1/{pokemonName}")
-    public UserResponseV1 getNameV1(@PathVariable("pokemonName") String nome) {
-        return PokemonResponseAdapter.castV1(integration.getPokemon(nome));
-    }
-
-    @ResponseStatus(HttpStatus.OK)
-    @GetMapping("/v2/{pokemonName}")
-    public UserResponseV2 getNameV2(@PathVariable("pokemonName") String nome) {
-        return PokemonResponseAdapter.castV2(integration.getPokemon(nome));
+    public UserController(UserRepository repository, UserPokemonService service) {
+        this.repository = repository;
+        this.service = service;
     }
 
     @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping
-    public UserResponseV1 save(@RequestBody UserRequest request) {
-        System.out.println(request.name());
-        return new UserResponseV1("SUCCESS", 10);
+    @PostMapping("/user")
+    public UserResponse save(@RequestBody UserRequest request) {
+        User user = PokemonResponseAdapter.cast(request);
+        return PokemonResponseAdapter.cast(service.register(user));
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping("/user/find-name/{name}")
+    public UserResponse getByName(@PathVariable("name") String name) {
+        return PokemonResponseAdapter.cast(repository.findByName(name));
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping("/user/find-id/{id}")
+    public UserResponse getById(@PathVariable("id") String id) {
+        return PokemonResponseAdapter.cast(repository.findById(id));
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @DeleteMapping("/user/{id}")
+    public void delete(@PathVariable("id") String id) {
+        repository.delete(id);
     }
 
 }
