@@ -10,9 +10,7 @@ public record UserOrm(
         String id,
         @Indexed
         String nome,
-        String endereco,
         String email,
-        String cidade,
-        PokemonOrm pokemon
+        EnderecoOrm endereco
 ) {
 }

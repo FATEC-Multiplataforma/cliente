@@ -15,7 +15,7 @@ public class FeignErrorDecoder implements ErrorDecoder {
             case 400:
                 throw new BadRequestException("Itens enviados ao Pokemons estao com erros");
             case 404:
-                throw new NotFoundException("Pokemon não existe");
+                throw new NotFoundException("Endereco não existe");
             default:
                 throw new InternalServerException("Erro não mapeado");
         }

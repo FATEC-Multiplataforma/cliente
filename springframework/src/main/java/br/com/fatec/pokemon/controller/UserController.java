@@ -1,6 +1,6 @@
 package br.com.fatec.pokemon.controller;
 
-import br.com.fatec.pokemon.controller.adapter.PokemonResponseAdapter;
+import br.com.fatec.pokemon.controller.adapter.UserControllerAdapter;
 import br.com.fatec.pokemon.controller.dto.request.UserRequest;
 import br.com.fatec.pokemon.controller.dto.response.UserResponse;
 import br.com.fatec.pokemon.entity.User;
@@ -23,20 +23,20 @@ public class UserController {
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/user")
     public UserResponse save(@RequestBody UserRequest request) {
-        User user = PokemonResponseAdapter.cast(request);
-        return PokemonResponseAdapter.cast(service.register(user));
+        User user = UserControllerAdapter.cast(request);
+        return UserControllerAdapter.cast(service.register(user));
     }
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/user/find-name/{name}")
     public UserResponse getByName(@PathVariable("name") String name) {
-        return PokemonResponseAdapter.cast(repository.findByName(name));
+        return UserControllerAdapter.cast(repository.findByName(name));
     }
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/user/find-id/{id}")
     public UserResponse getById(@PathVariable("id") String id) {
-        return PokemonResponseAdapter.cast(repository.findById(id));
+        return UserControllerAdapter.cast(repository.findById(id));
     }
 
     @ResponseStatus(HttpStatus.OK)

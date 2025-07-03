@@ -34,7 +34,7 @@ public class UserRepositoryImpl implements UserRepository {
         try {
             Optional<UserOrm> optional = repository.findById(id);
             if (optional.isEmpty()) {
-                throw new NotFoundException("Pokemon nao existe");
+                throw new NotFoundException("Endereco nao existe");
             }
             return UserRepositoryAdapter.cast(
                     repository.save(optional.get()));
@@ -50,7 +50,7 @@ public class UserRepositoryImpl implements UserRepository {
         try {
             Optional<UserOrm> optional = repository.findByNome(name);
             if (optional.isEmpty()) {
-                throw new NotFoundException("Pokemon nao existe");
+                throw new NotFoundException("Endereco nao existe");
             }
             return UserRepositoryAdapter.cast(
                     repository.save(optional.get()));
