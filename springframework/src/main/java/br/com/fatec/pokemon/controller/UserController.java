@@ -4,8 +4,10 @@ import br.com.fatec.pokemon.controller.adapter.UserControllerAdapter;
 import br.com.fatec.pokemon.controller.dto.request.UserRequest;
 import br.com.fatec.pokemon.controller.dto.response.UserResponse;
 import br.com.fatec.pokemon.entity.User;
+import br.com.fatec.pokemon.exception.BadRequestException;
 import br.com.fatec.pokemon.repository.UserRepository;
 import br.com.fatec.pokemon.service.UserPokemonService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,7 +24,7 @@ public class UserController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/user")
-    public UserResponse save(@RequestBody UserRequest request) {
+    public UserResponse save(@Valid @RequestBody UserRequest request) {
         User user = UserControllerAdapter.cast(request);
         return UserControllerAdapter.cast(service.register(user));
     }
