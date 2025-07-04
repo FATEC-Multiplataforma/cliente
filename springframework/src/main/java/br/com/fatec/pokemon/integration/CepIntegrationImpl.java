@@ -4,6 +4,7 @@ import br.com.fatec.pokemon.entity.Endereco;
 import br.com.fatec.pokemon.integration.adapter.PokemonIntegrationAdapter;
 import br.com.fatec.pokemon.integration.client.ViaCepIntegrationWithFeign;
 import br.com.fatec.pokemon.integration.dto.ViaCepResponse;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.retry.annotation.Backoff;
 import org.springframework.retry.annotation.Retryable;
 import org.springframework.stereotype.Component;
@@ -20,11 +21,10 @@ public class CepIntegrationImpl implements CepIntegration {
     @Retryable(
             maxAttempts = 4,
             backoff = @Backoff(delay = 1000))
-//    @Cacheable(value = "endereco-cache", key = "#cep")
+    @Cacheable(value = "endereco-cache", key = "#cep")
     public Endereco getCep(final String cep) {
-//        ViaCepResponse response = integration.getCep(cep);
-//        return PokemonIntegrationAdapter.cast(response);
-        return null;
+        ViaCepResponse response = integration.getCep(cep);
+        return PokemonIntegrationAdapter.cast(response);
     }
 
 //    @Recover
