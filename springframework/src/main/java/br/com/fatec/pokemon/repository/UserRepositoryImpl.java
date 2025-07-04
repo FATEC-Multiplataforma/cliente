@@ -6,12 +6,16 @@ import br.com.fatec.pokemon.exception.NotFoundException;
 import br.com.fatec.pokemon.repository.adapter.UserRepositoryAdapter;
 import br.com.fatec.pokemon.repository.client.UserRepositoryWithMongo;
 import br.com.fatec.pokemon.repository.orm.UserOrm;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Repository
 public class UserRepositoryImpl implements UserRepository {
+    private static final Logger LOG = LoggerFactory.getLogger(UserRepositoryImpl.class);
 
     private final UserRepositoryWithMongo repository;
 
@@ -25,6 +29,8 @@ public class UserRepositoryImpl implements UserRepository {
             UserOrm orm = UserRepositoryAdapter.cast(user);
             return UserRepositoryAdapter.cast(repository.save(orm));
         } catch (Exception ex) {
+            LOG.error("Erro ao salvar usuario: {} o erro aconteceu na data/hora: {}",
+                    ex.getMessage(), LocalDateTime.now());
             throw new InternalServerException(ex);
         }
     }
@@ -39,8 +45,11 @@ public class UserRepositoryImpl implements UserRepository {
             return UserRepositoryAdapter.cast(
                     repository.save(optional.get()));
         } catch (NotFoundException ex) {
+            LOG.info("Usuario nao encontrado");
             throw ex;
         } catch (Exception ex) {
+            LOG.error("Erro ao procurar usuario por id: {} o erro aconteceu na data/hora: {}",
+                    ex.getMessage(), LocalDateTime.now());
             throw new InternalServerException(ex);
         }
     }
@@ -57,6 +66,8 @@ public class UserRepositoryImpl implements UserRepository {
         } catch (NotFoundException ex) {
             throw ex;
         } catch (Exception ex) {
+            LOG.error("Erro ao procurar usuario por nome: {} o erro aconteceu na data/hora: {}",
+                    ex.getMessage(), LocalDateTime.now());
             throw new InternalServerException(ex);
         }
     }
@@ -66,6 +77,8 @@ public class UserRepositoryImpl implements UserRepository {
         try {
             repository.deleteById(id);
         } catch (Exception ex) {
+            LOG.error("Erro ao deletar usuario: {} o erro aconteceu na data/hora: {}",
+                    ex.getMessage(), LocalDateTime.now());
             throw new InternalServerException(ex);
         }
     }

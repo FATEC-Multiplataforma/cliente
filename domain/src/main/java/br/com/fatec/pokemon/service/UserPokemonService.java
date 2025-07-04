@@ -2,11 +2,19 @@ package br.com.fatec.pokemon.service;
 
 import br.com.fatec.pokemon.entity.Endereco;
 import br.com.fatec.pokemon.entity.User;
+import br.com.fatec.pokemon.exception.InternalServerException;
 import br.com.fatec.pokemon.exception.NotFoundException;
 import br.com.fatec.pokemon.integration.CepIntegration;
 import br.com.fatec.pokemon.repository.UserRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.time.LocalDateTime;
 
 public class UserPokemonService {
+
+    private static final Logger LOG = LoggerFactory.getLogger(UserPokemonService.class);
+
     private final UserRepository repository;
     private final CepIntegration integration;
 
@@ -31,13 +39,18 @@ public class UserPokemonService {
     }
 
     private User save(final String id, User user) {
-        Endereco endereco = integration.getCep(user.endereco().cep());
-        return repository.save(new User(
-                id,
-                user.nome(),
-                user.email(),
-                endereco));
+        try {
+            Endereco endereco = integration.getCep(user.endereco().cep());
+            return repository.save(new User(
+                    id,
+                    user.nome(),
+                    user.email(),
+                    endereco));
+        } catch (Exception ex) {
+            LOG.error("Erro na regra de negocio ao salvar: {} na data/hora: {}",
+                    ex.getMessage(), LocalDateTime.now());
+            throw new InternalServerException(ex);
+        }
     }
-
 
 }
