@@ -2,7 +2,7 @@ package br.com.fatec.pokemon.configuration.service;
 
 import br.com.fatec.pokemon.integration.CepIntegration;
 import br.com.fatec.pokemon.repository.UserRepository;
-import br.com.fatec.pokemon.service.UserPokemonService;
+import br.com.fatec.pokemon.service.ClientService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -10,9 +10,9 @@ import org.springframework.context.annotation.Configuration;
 public class UserPokemonServiceConfig {
 
     @Bean
-    public UserPokemonService userPokemonService(
+    public ClientService userPokemonService(
             UserRepository repository, CepIntegration integration) {
-        return new UserPokemonService(repository, integration);
+        return new ClientService(repository, integration);
     }
 
 }

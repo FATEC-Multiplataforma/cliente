@@ -11,14 +11,14 @@ import org.slf4j.LoggerFactory;
 
 import java.time.LocalDateTime;
 
-public class UserPokemonService {
+public class ClientService {
 
-    private static final Logger LOG = LoggerFactory.getLogger(UserPokemonService.class);
+    private static final Logger LOG = LoggerFactory.getLogger(ClientService.class);
 
     private final UserRepository repository;
     private final CepIntegration integration;
 
-    public UserPokemonService(
+    public ClientService(
             UserRepository repository,
             CepIntegration integration) {
         this.repository = repository;
