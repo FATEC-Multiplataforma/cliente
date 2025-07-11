@@ -11,7 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/context/v1")
+@RequestMapping("/fretec/v1")
 public class ClientController {
     private final UserRepository repository;
     private final ClientService service;

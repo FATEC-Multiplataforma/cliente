@@ -3,14 +3,14 @@ package br.com.fatec.pokemon.repository.adapter;
 import br.com.fatec.pokemon.entity.Endereco;
 import br.com.fatec.pokemon.entity.User;
 import br.com.fatec.pokemon.repository.orm.EnderecoOrm;
-import br.com.fatec.pokemon.repository.orm.UserOrm;
+import br.com.fatec.pokemon.repository.orm.ClientOrm;
 
 public class UserRepositoryAdapter {
     private UserRepositoryAdapter() {
     }
 
-    public static UserOrm cast(User user) {
-        return new UserOrm(
+    public static ClientOrm cast(User user) {
+        return new ClientOrm(
                 user.id(),
                 user.nome(),
                 user.email(),
@@ -28,7 +28,7 @@ public class UserRepositoryAdapter {
                 endereco.uf());
     }
 
-    public static User cast(UserOrm orm) {
+    public static User cast(ClientOrm orm) {
         return new User(
                 orm.id(),
                 orm.nome(),

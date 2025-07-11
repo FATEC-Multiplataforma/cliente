@@ -5,7 +5,7 @@ import br.com.fatec.pokemon.exception.InternalServerException;
 import br.com.fatec.pokemon.exception.NotFoundException;
 import br.com.fatec.pokemon.repository.adapter.UserRepositoryAdapter;
 import br.com.fatec.pokemon.repository.client.UserRepositoryWithMongo;
-import br.com.fatec.pokemon.repository.orm.UserOrm;
+import br.com.fatec.pokemon.repository.orm.ClientOrm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
@@ -26,7 +26,7 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public User save(User user) {
         try {
-            UserOrm orm = UserRepositoryAdapter.cast(user);
+            ClientOrm orm = UserRepositoryAdapter.cast(user);
             return UserRepositoryAdapter.cast(repository.save(orm));
         } catch (Exception ex) {
             LOG.error("Erro ao salvar usuario: {} o erro aconteceu na data/hora: {}",
@@ -38,7 +38,7 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public User findById(final String id) {
         try {
-            Optional<UserOrm> optional = repository.findById(id);
+            Optional<ClientOrm> optional = repository.findById(id);
             if (optional.isEmpty()) {
                 throw new NotFoundException("Endereco nao existe");
             }
@@ -57,7 +57,7 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public User findByName(final String name) {
         try {
-            Optional<UserOrm> optional = repository.findByNome(name);
+            Optional<ClientOrm> optional = repository.findByNome(name);
             if (optional.isEmpty()) {
                 throw new NotFoundException("Endereco nao existe");
             }
